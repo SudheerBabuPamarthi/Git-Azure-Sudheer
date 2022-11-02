@@ -1,0 +1,33 @@
+echo "Creating Azure NSG & Rules"
+az network nsg create -g ${RG} -n ${RG}_NSG1
+az network nsg rule create -g ${RG} --nsg-name ${RG}_NSG1 -n ${RG}_NSG1_RULE1 --priority 100 \
+--source-address-prefixes '*' --source-port-ranges '*'  --destination-address-prefixes '*' \
+--destination-port-ranges '*' --access Allow  --protocol TCP --description "Allowing All Traffic For Now"
+
+az vm create --name WEBVM1 --resource-group AZURE1 --image UbuntuLTS --vnet-name ${RG}-vNET1 \
+--subnet ${RG}-Subnet-1 --admin-username adminsudheer --admin-password "sudheer@1986" --size Standard_B1s \
+--nsg "" --asgs Group_Web
+
+az vm create --name WEBVM2 --resource-group AZURE1 --image UbuntuLTS --vnet-name ${RG}-vNET1 \
+--subnet ${RG}-Subnet-1 --admin-username adminsudheer --admin-password "sudheer@1986" --size Standard B1s \
+--nsg "" --asgs Group_Web
+
+az vm create --name APPVM1 --resource-group AZURE1 --image UbuntuLTS --vnet-name ${RG}-vNET1 \
+--subnet ${RG}-Subnet-1 --admin-username adminsudheer --admin-password "sudheer@1986" --size Standard B1s \
+--nsg "" --asgs Group_App
+
+az vm create --name APPVM2 --resource-group AZURE1 --image UbuntuLTS --vnet-name ${RG}-vNET1 \
+--subnet ${RG}-Subnet-1 --admin-username adminsudheer --admin-password "sudheer@1986" --size Standard B1s \
+--nsg "" --asgs Group_App
+
+az vm create --name DBVM1 --resource-group AZURE1 --image UbuntuLTS --vnet-name ${RG}_vNET1 \
+--subnet ${RG}-Subnet-1 --admin-username adminsudheer --admin-password "sudheer@1986" --size Standard B1s \
+--nsg "" --asgs Group_DB
+
+az create --name DBVM2 --resource-group AZURE1 --image UbuntuLTS --vnet-name ${RG}-vNET1 \
+--subnet ${RG}-Subnet-1 --admin-username adminsudheer --admin-password "sudheer@1986" --size Standard B1s \
+--nsgs "" --asgs Group_DB
+
+watch ls
+
+Modified
